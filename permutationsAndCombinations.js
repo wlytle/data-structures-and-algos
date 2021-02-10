@@ -131,3 +131,33 @@ function printPerm(buffer) {
 // [1,2,2]
 
 // [5]
+function makeTotal(a, target) {
+  if (!a?.length || target <= 0) return;
+  let buffer = [];
+  makeTotalHelper(a, target, buffer, 0, 0, 0);
+}
+
+function makeTotalHelper(a, target, buffer, bufferIdx, startIdx, total) {
+  //termination case
+  if (total === target) {
+    printBuffer(buffer);
+    return;
+  }
+  if (total > target) {
+    return;
+  }
+  //find next possible selections for buffer
+  for (let i = startIdx; i < a.length; i++) {
+    buffer.push(a[i]);
+
+    //recurse to check solution and find next values
+    makeTotalHelper(a, target, buffer, bufferIdx + 1, i, total + a[i]);
+    buffer.pop();
+  }
+}
+
+function printBuffer(buffer) {
+  console.log(buffer);
+}
+
+makeTotal([1, 2, 5], 5);
