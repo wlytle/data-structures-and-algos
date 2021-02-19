@@ -1,3 +1,10 @@
+function sort(list, value) {
+  let k = 0;
+  while (k < list.length && value > list[k]) k++;
+  list[k] = value;
+  return list;
+}
+
 function findMatching(s1, s2) {
   first = s1.split(" ");
   second = s2.split(" ");
@@ -10,12 +17,12 @@ function findMatching(s1, s2) {
       curr = first[i];
       //if the character is in both strings and isn't a numeric add it to char
       if (curr === second[j] && Number.isNaN(+curr)) {
-        char += " " + curr;
-        // char = sort(char, curr);
+        // char += " " + curr;
+        char = sort(char, curr);
         // if the charecter is in bot strs and is a numeric add it to num
       } else if (curr === second[j]) {
-        num += " " + curr;
-        // num = sort(num, curr);
+        // num += " " + curr;
+        num = sort(num, curr);
       }
     }
   }
