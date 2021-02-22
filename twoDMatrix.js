@@ -1,15 +1,26 @@
 //rotate a 2D matrix 90 degrees clockwise
 
+function performMove(matrix, r1, r2, c1, c2, offset) {
+  let temp = matrix[r1][c1 + offset];
+  matrix[r1][c1 + offset] = matrix[r2 - offset][c1];
+  matrix[r2 - offset][c1] = matrix[r2][c2 - offset];
+  matrix[r2][c2 - offset] = matrix[r1 + offset][c2];
+  matrix[r1 + offset][c2] = temp;
+}
+
 function rotate(matrix) {
   size = matrix.length;
-  innerSquares = MAth.floor(matrix.length / 2) - 1;
-  for (let x = 0; x < innerSquares; x++) {
+  innerSquares = Math.floor(matrix.length / 2);
+  for (let i = 0; i < innerSquares; i++) {
     let r1 = i,
       c1 = i,
       r2 = r1 + size - 1,
       c2 = c1 + size - 1;
-    for (let j = 1; j < size - 1; j++) {}
+    for (let j = i; j < size - 1; j++) {
+      performMove(matrix, r1, r2, c1, c2, j);
+    }
   }
+  return matrix;
 }
 
 console.log(
