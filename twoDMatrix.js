@@ -113,3 +113,117 @@ function printDiagonal(a) {
 
 // console.log(printDiagonal([[1, 2, 3, 4, 5]]));
 // // 1 2 3 4 5
+
+//Print elements of a matrix in spiral order.Questions to Clarify:Q. Can the matrix be a rectangle?A. YesSolution:We use the concept of layers again - similar to rotating a matrix by 90 degrees.For each layer, we print out the 4 sides. To do this, we pass the ​lastRow​ and ​lastColumnof every layer. This helps us define the boundaries of the layer:©​ 2017 Interview Camp (interviewcamp.io)
+
+// function printLayer(a, lastCol, lastRow, layer) {
+//   //edge case of printng the final square
+//   if (lastCol === layer && lastRow === layer) console.log(a[layer][layer]);
+//   //first row
+//   for (let current = layer; current < lastCol; current++) {
+//     console.log(a[layer][current]);
+//   }
+//   //last col
+//   for (let current = layer; current < lastRow; current++) {
+//     console.log(a[current][lastCol]);
+//   }
+//   //last row
+//   for (let current = lastCol; current > layer; current--) {
+//     console.log(a[lastRow][current]);
+//   }
+//   //first col
+//   for (let current = lastRow; current > layer; current--) {
+//     console.log(a[current][layer]);
+//   }
+// }
+
+// function spiral(a) {
+//   if (!a?.length) return null;
+//   if (a.length <= 1 || a[0].length <= 1) {
+//     for (let r = 0; r < a.length; r++) {
+//       for (let c = 0; c < a[0].length; c++) {
+//         print(a, r, c);
+//       }
+//     }
+//     return;
+//   }
+//   const numSquares = Math.floor(a.length / 2),
+//     width = a[0].length,
+//     height = a.length;
+//   for (let i = 0; i <= numSquares; i++) {
+//     let lastCol = width - 1 - i;
+//     lastRow = height - 1 - i;
+//     printLayer(a, lastCol, lastRow, i);
+//   }
+// }
+
+function print(a, r, c) {
+  console.log(a[r][c]);
+}
+
+function printSpiral(a, layer, lastRow, lastCol) {
+  //if last cell is it's own layer other cases wont print
+  if (lastRow === layer && lastCol === layer) print(a, layer, layer);
+  //top Row
+  for (let current = layer; current < lastCol; current++) {
+    print(a, layer, current);
+  }
+  //right col
+  for (let current = layer; current < lastRow; current++) {
+    print(a, current, lastCol);
+  }
+  //bottom Row
+  for (let current = lastCol; current > layer; current--) {
+    print(a, lastRow, current);
+  }
+  //leftCol
+  for (let current = lastRow; current > layer; current--) {
+    print(a, current, layer);
+  }
+}
+
+function spiral(a) {
+  const numSquares = Math.min(
+      Math.floor(a.length / 2),
+      Math.floor(a[0].length / 2)
+    ),
+    width = a[0].length,
+    height = a.length;
+  // add edge case for single dimension matrix
+  if (height <= 1 || width <= 1) {
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        print(a, i, j);
+      }
+    }
+    return;
+  }
+  for (let layer = 0; layer <= numSquares; layer++) {
+    let lastCol = width - 1 - layer,
+      lastRow = height - 1 - layer;
+    printSpiral(a, layer, lastRow, lastCol);
+  }
+}
+
+// console.log(
+//   spiral([
+//     [1, 2, 3, 4],
+//     [14, 15, 16, 5],
+//     [13, 20, 17, 6],
+//     [12, 19, 18, 7],
+//     [11, 10, 9, 8],
+//   ])
+// );
+// //1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+// console.log(
+//   spiral([
+//     [1, 2, 3, 4],
+//     [10, 11, 12, 5],
+//     [9, 8, 7, 6],
+//   ])
+// );
+//1 2 3 4 5 6 7 8 9 10 11 12
+console.log(spiral([[1, 2, 3, 4]]));
+//1 2 3 4
+console.log(spiral([[4]]));
+//4
