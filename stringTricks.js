@@ -76,5 +76,51 @@ function reverseSentence(s) {
   }
   return reversed;
 }
-console.log(reverseSentence("The boat is yellow"));
+// console.log(reverseSentence("The boat is yellow"));
 //yellow is boat the
+
+// Find the longest palindrome in a string. ​For example,"ab​babab​aab" -> "babab"
+// Interview CampTechnique: Longest Palindromic SubstringQuestions to Clarify:
+// Q. How do you want the output?
+// A. Return a pair of indices that represent start and end of the substring.
+// Q. Is a single character considered a palindrome?
+// A. Yes
+
+function expand(s, left, right, longest, res) {
+  while (
+    s[left - 1] === s[right + 1] &&
+    left - 1 >= 0 &&
+    right + 1 < s.length
+  ) {
+    left--;
+    right++;
+  }
+  let len = right - left + 1;
+  if (len > longest) {
+    res = [left, right];
+  }
+  return res;
+}
+
+function longestPalindrome(s) {
+  if (s.length === 1) return [1, 1];
+  if (!s?.length) return null;
+  let longest = 0,
+    res = [];
+  for (let i = 0; i < s.length - 1; i++) {
+    //expand between chars
+    if (s[i] === s[i + 1]) {
+      res = expand(s, i, i + 1, longest, res);
+      longest = res[1] - res[0] + 1;
+      //expand around char
+    } else if (s[i - 1] === s[i + 1]) {
+      res = expand(s, i - 1, i + 1, longest, res);
+      longest = res[1] - res[0] + 1;
+    }
+  }
+  return res;
+}
+
+console.log(longestPalindrome("kayakpop"));
+console.log(longestPalindrome("a"));
+console.log(longestPalindrome("pumpkin"));
