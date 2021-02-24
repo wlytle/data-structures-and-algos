@@ -121,6 +121,49 @@ function longestPalindrome(s) {
   return res;
 }
 
-console.log(longestPalindrome("kayakpop"));
-console.log(longestPalindrome("a"));
-console.log(longestPalindrome("pumpkin"));
+// console.log(longestPalindrome("kayakpop"));
+// console.log(longestPalindrome("a"));
+// console.log(longestPalindrome("pumpkin"));
+
+// Rotate an array A by X items. For example,
+// A = [1,2,3,4,5,6] and X = 2, Result = [5,6,1,2,3,4]
+// Q. Can ​X​ be greater than the length of the array?
+// A. Yes
+
+// function cycleArr(A, x) {
+//   const cycle = x % A.length;
+//   if (cycle === 0) return A;
+//   if (!A?.length) return null;
+//   for (let i = 0; i < cycle; i++) {
+//     A.unshift(A.pop());
+//   }
+//   return A;
+// }
+
+function reverse(A, left, right) {
+  let temp;
+  while (left < right) {
+    temp = A[left];
+    A[left] = A[right];
+    A[right] = temp;
+    left++;
+    right--;
+  }
+}
+
+function cycleArr(A, x) {
+  if (!A?.length) return null;
+  const cycle = x % A.length;
+  if (cycle === 0) return A;
+  reverse(A, 0, A.length - 1);
+  reverse(A, 0, cycle - 1);
+  reverse(A, cycle, A.length - 1);
+  return A;
+}
+
+console.log(cycleArr([1, 2, 3, 4, 5, 6], 2));
+//[5,6,1,2,3,4]
+console.log(cycleArr([1, 2, 3, 4, 5, 6], 6));
+//[1,2,3,4,5,6]
+console.log(cycleArr([1], 2));
+//[1]
