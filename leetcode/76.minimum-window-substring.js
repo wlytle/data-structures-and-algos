@@ -13,15 +13,14 @@
 
 //check solution
 function checkSolution(subDict, dict) {
-  console.log("Check", dict);
-  for (const char in dict) {
+  for (const char in subDict) {
     if (!dict[char] || subDict[char] > dict[char]) return false;
   }
-  console.log("not true");
   return true;
 }
 // check conditional if there is a splution if check if moving left would undo solution if so move right if moving left would
 var minWindow = function (s, t) {
+  if (s === t) return t;
   let subDict = {},
     dict = {},
     curr;
@@ -34,22 +33,19 @@ var minWindow = function (s, t) {
   let left = 0,
     right = 0,
     res = "";
-
-  //if the char at right is in subdict add it to dict or increase it's coutn
+  curr = s[right];
+  //if the char at right is in subdict add it to dict or increase it's count
   if (subDict[curr]) {
     dict[curr] ? (dict[curr] += 1) : (dict[curr] = 1);
   }
-
-  while (left < s.length) {
-    console.log("l", left, "r", right);
-    console.log("res", res);
+  right++;
+  while (right < s.length) {
     curr = s[right];
     // if no valid solution yet AND
     //check if new entry provides valid solution
     // return bollean if solution check length
     if (!res.length && checkSolution(subDict, dict)) {
       res = s.substr(left, right - left + 1);
-      console.log("d", dict);
       right++;
       // no solution yet and the current window is not a valid solution advance right pointer
     } else if (!res.length) {
@@ -61,19 +57,14 @@ var minWindow = function (s, t) {
       //Already a valid solution has been found
     } else {
       let curr = s[left];
-      //   console.log("Here");
-      //if left is pointing at a char that is not in t advance left or is in t but there are more of them than presenet in t i.e. if advancing left won't undoe soln advance
+      //if left is pointing at a char that is not in t advance left or is in t but there are more of them than presenet in t i.e. if advancing left won't undo soln advance
       if (!subDict[curr] || dict[curr] > subDict[curr]) {
         if (subDict[curr]) {
-          console.log("move left", curr, dict[curr]);
           dict[curr] > 1 ? (dict[curr] -= 1) : (dict[curr] = 0);
         }
         left++;
-        //
-        // console.log("NowHere");
         if (right - left + 1 < res.length) {
           res = s.substr(left, right - left + 1);
-          console.log(res);
         }
       } else {
         let curr = s[right];
@@ -85,9 +76,26 @@ var minWindow = function (s, t) {
       }
     }
   }
+  // check remaining options moving left pointer to the end
+  while (left < s.length) {
+    let curr = s[left];
+    //if left is pointing at a char that is not in t advance left or is in t but there are more of them than presenet in t i.e. if advancing left won't undo soln advance
+    if (!subDict[curr] || dict[curr] > subDict[curr]) {
+      if (subDict[curr]) {
+        dict[curr] > 1 ? (dict[curr] -= 1) : (dict[curr] = 0);
+      }
+      left++;
+
+      if (right - left < res.length) {
+        res = s.substr(left, right - left);
+      }
+    } else {
+      return res;
+    }
+  }
   return res;
 };
 
-console.log(minWindow("ADOBECODEBANC", "ABC"));
+// console.log(minWindow("ADOBECODEBANC", "ABC"));
 
 // @lc code=end
