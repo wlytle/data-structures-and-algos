@@ -222,7 +222,21 @@ d = [
   6882,
 ];
 
-console.log(triplets(8, [1, 4, 2, 6, 3]));
+// console.log(triplets(8, [1, 4, 2, 6, 3]));
 //3
 // console.log(triplets(13041, d));
 //56077
+
+// <><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+// Closure stuff
+function change(a) {
+  // a += 2;
+  a.push("Cheddar");
+}
+
+function closure(a) {
+  change(a);
+  return a;
+}
+
+console.log(closure(["Manchego"]));
