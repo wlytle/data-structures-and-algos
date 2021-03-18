@@ -76,8 +76,8 @@ function reverseSentence(s) {
   }
   return reversed;
 }
-// console.log(reverseSentence("The boat is yellow"));
-//yellow is boat the
+console.log(reverseSentence("The boat is yellow"));
+// yellow is boat the
 
 // Find the longest palindrome in a string. ​For example,"ab​babab​aab" -> "babab"
 // Interview CampTechnique: Longest Palindromic SubstringQuestions to Clarify:
