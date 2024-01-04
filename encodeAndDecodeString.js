@@ -53,6 +53,7 @@ const test = (strs) => {
     console.log(true, decoded);
 }
 
+test(["31#", "d!@#$!og", "i#4s", "g___####4343##ood"])
 test(["a", "dog", "is", "good"])
 test(["#31a", "d!@#$!og", "i#4s", "g___####4343##ood"])
 test([""])
