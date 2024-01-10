@@ -195,3 +195,4 @@ console.log(longestUniqSubstr("w"));
 //"w"
 console.log(longestUniqSubstr("abcdefg"));
 //("abcdefg");
+console.log(longestUniqSubstr("pwwkew"));
